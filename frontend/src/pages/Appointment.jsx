@@ -110,7 +110,7 @@ const Appointment = () => {
 
   return docInfo ? (
     <div className="max-w-9xl mx-auto p-4">
-      {/* Doctor Details */}
+
       <div className="flex flex-col sm:flex-row gap-4">
         <div>
           <img className="bg-primary w-full sm:max-w-72 rounded-lg" src={docInfo.image} alt="" />
@@ -137,7 +137,6 @@ const Appointment = () => {
         </div>
       </div>
 
-      {/* Calendar Header */}
       <div className="flex justify-between items-center my-6">
         <button onClick={() => handleMonthChange('prev')} className="px-4 py-2 border rounded hover:bg-gray-200">Previous</button>
         <h3 className="text-xl font-semibold">
@@ -146,7 +145,6 @@ const Appointment = () => {
         <button onClick={() => handleMonthChange('next')} className="px-4 py-2 border rounded hover:bg-gray-200">Next</button>
       </div>
 
-      {/* Calendar */}
       <div className="grid grid-cols-7 gap-2 text-center">
         {daysOfWeek.map(day => (
           <div key={day} className="font-bold text-gray-700">{day}</div>
@@ -171,7 +169,6 @@ const Appointment = () => {
         })}
       </div>
 
-      {/* Time Slots */}
       {selectedDay && (
         <>
           <h3 className="text-lg font-medium mt-8 mb-4 text-center">Select a Time</h3>
