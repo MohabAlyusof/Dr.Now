@@ -12,7 +12,7 @@ function Contact() {
 
       <div className="my-10 flex-col justify-center md:flex-row gap-10 mb-28 text-sm">
         <img
-          className="w-full md:max-w-360px"
+          className="w-full md:max-w-[360px]"
           src={assets.contact_image}
           alt=""
         />
@@ -20,10 +20,10 @@ function Contact() {
       <div className="flex flex-col justify-center items-start gap-6">
         <p className="font-semibold text-lg text-gray-600">OUR OFFICE</p>
         <p className="text-gray-500">
-          12345 placholder address <br /> suite 350, new york, USA
+        Alter Markt 06 <br />31134 Hildesheim , Lower Saxony, Germany
         </p>
         <p className="text-gray-500">
-          Tel: (040) 11 66 0854 <br /> Email: dr-now@info.com
+          Tel: (+49) 1575910542 <br /> Email:  Dr.Now2025@gmail.com
         </p>
         <p className="font-semibold text-lg text-gray-600">Careers at Dr.Now</p>
         <p className="text-gray-500">
