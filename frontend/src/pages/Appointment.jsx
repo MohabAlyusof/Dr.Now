@@ -51,22 +51,26 @@ const Appointment = () => {
 
   const handleMonthChange = (direction) => {
     if (direction === 'prev') {
-      if (currentMonth === 0) {
-        setCurrentMonth(11);
-        setCurrentYear(currentYear - 1);
-      } else {
-        setCurrentMonth(currentMonth - 1);
+      if (currentYear > today.getFullYear() || (currentYear === today.getFullYear() && currentMonth > today.getMonth())) {
+        if (currentMonth === 0) {
+          setCurrentMonth(11);
+          setCurrentYear(currentYear - 1);
+        } else {
+          setCurrentMonth(currentMonth - 1);
+        }
+        setSelectedDay(null);
+        setSelectedTime('');
       }
-    } else {
+    } else if (direction === 'next') {
       if (currentMonth === 11) {
         setCurrentMonth(0);
         setCurrentYear(currentYear + 1);
       } else {
         setCurrentMonth(currentMonth + 1);
       }
+      setSelectedDay(null);
+      setSelectedTime('');
     }
-    setSelectedDay(null);
-    setSelectedTime('');
   };
 
   const bookAppointment = async () => {
@@ -139,11 +143,22 @@ const Appointment = () => {
 
       {/* Calendar Header */}
       <div className="flex justify-between items-center my-6">
-        <button onClick={() => handleMonthChange('prev')} className="px-4 py-2 border rounded hover:bg-gray-200">Previous</button>
+        <button 
+          onClick={() => handleMonthChange('prev')} 
+          disabled={currentYear === today.getFullYear() && currentMonth === today.getMonth()}
+          className="px-4 py-2 border rounded hover:bg-gray-200 disabled:opacity-50"
+        >
+          Previous
+        </button>
         <h3 className="text-xl font-semibold">
           {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
         </h3>
-        <button onClick={() => handleMonthChange('next')} className="px-4 py-2 border rounded hover:bg-gray-200">Next</button>
+        <button 
+          onClick={() => handleMonthChange('next')} 
+          className="px-4 py-2 border rounded hover:bg-gray-200"
+        >
+          Next
+        </button>
       </div>
 
       {/* Calendar */}
