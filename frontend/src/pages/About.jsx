@@ -1,76 +1,100 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { motion } from "framer-motion";
 
-function About() {
+const fadeInVariant = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const About = () => {
   return (
-    <div>
-      <div className="text-center text-2xl pt-10 text-gray-500">
+    <motion.div
+      className="px-6 md:px-16 max-w-7xl mx-auto text-[#262626]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeInVariant}
+    >
+      <div className="text-center text-2xl pt-10 text-[#707070]">
         <p>
-          ABOUT <span className="text-gray-700 font-medium">US</span>
+          ABOUT <span className="text-gray-700 font-semibold">US</span>
         </p>
       </div>
-
-      <div className="my-10 flex flex-col md:flex-row gap-12">
+      <motion.div
+        className="my-12 flex flex-col md:flex-row items-center gap-12"
+        variants={fadeInVariant}
+      >
         <img
-          className="w-full md:max-w-[360px]"
+          className="w-full md:max-w-[360px] rounded-2xl shadow-lg"
           src={assets.about_image}
-          alt=""
+          alt="About"
         />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600">
+
+        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600 leading-relaxed">
           <p>
-            Welcome to Dr.Now, your trusted partner in managing your healthcare
-            needs conveniently and efficiently. At Dr.Now, we understand the
-            challenges individuals face when it comes to scheduling doctor
-            appointments and managing their health records.
+            Welcome to <b className="text-[#126A9C]">Dr.Now</b> — your reliable
+            partner for modern digital healthcare. At Dr.Now, we understand the
+            challenges of managing appointments and keeping track of your
+            medical records. That's why we offer a platform that makes it easy —
+            fast, secure, and user-friendly.
           </p>
           <p>
-            Dr.Now is committed to excellence in healthcare technology. We
-            continuously strive to enhance our platform, integrating the latest
-            advancements to improve user experience and deliver superior
-            service. Whether you're booking your first appointment or managing
-            ongoing care, Dr.Now is here to support you every step of the way.
+            <b className="text-[#126A9C]">Dr.Now</b> stands for innovation and
+            trust. Our goal is to combine advanced technology with the personal
+            care everyone deserves. Whether you're booking your first
+            appointment or managing ongoing treatments, Dr.Now is here to
+            support you every step of the way.
           </p>
-          <b className="text-gray-800">Our Vision</b>
+          <b className="text-gray-800 text-base">Our Vision</b>
           <p>
-            Our vision at Dr.Now is to create a seamless healthcare experience
-            for every user. We aim to bridge the gap between patients and
-            healthcare providers, making it easier for you to access the care
-            you need, when you need it.
+            Our vision at <b className="text-[#126A9C]">Dr.Now</b> is to create
+            a seamless connection between patients and healthcare providers. We
+            aim to revolutionize access to medical care — making it fast,
+            digital, and available wherever you are. With Dr.Now, your health is
+            just one click away.
           </p>
         </div>
-      </div>
-
-      <div className="text-xl my-4">
+      </motion.div>
+      <motion.div
+        className="text-center text-xl my-8 text-[#707070]"
+        variants={fadeInVariant}
+      >
         <p>
           WHY <span className="text-gray-700 font-semibold">CHOOSE US</span>
         </p>
-      </div>
-
-      <div className="flex flex-col md:flex-row mb-20">
-        <div className="border px-10 md:px-16 py-8 sm:py-16 flex-col gap-5 text-15px hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-          <b>Efficiency:</b>
-          <p>
-            Streamlined appointment scheduling that fits into your busy
-            lifestyle.
-          </p>
-        </div>
-        <div className="border px-10 md:px-16 py-8 sm:py-16 flex-col gap-5 text-15px hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-          <b>Convenience:</b>
-          <p>
-            Access to a network of trusted healthcare professionals in your
-            area.
-          </p>
-        </div>
-        <div className="border px-10 md:px-16 py-8 sm:py-16 flex-col gap-5 text-15px hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-          <b>Personalization:</b>
-          <p>
-            Tailored recommendations and reminders to help you stay on top of
-            your health.
-          </p>
-        </div>
-      </div>
-    </div>
+      </motion.div>
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+        variants={fadeInVariant}
+      >
+        {[
+          {
+            title: "EFFICIENCY",
+            desc: "Streamlined appointment scheduling that fits into your busy lifestyle.",
+          },
+          {
+            title: "CONVENIENCE",
+            desc: "Access to a network of trusted healthcare professionals in your area.",
+          },
+          {
+            title: "PERSONALIZATION",
+            desc: "Tailored recommendations and reminders to help you stay on top of your health.",
+          },
+        ].map((item, index) => (
+          <motion.div
+            key={index}
+            className="border px-8 py-12 rounded-2xl shadow-lg hover:shadow-2xl hover:bg-[#126A9C] hover:text-white transition-all duration-300 text-gray-600 text-[15px] flex flex-col gap-6 cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            variants={fadeInVariant}
+          >
+            <b className="text-base">{item.title}:</b>
+            <p>{item.desc}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+    </motion.div>
   );
-}
+};
 
 export default About;

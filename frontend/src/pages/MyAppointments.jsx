@@ -4,13 +4,17 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../assets/assets";
+import AppVideoCall from "../components/AppVideoCall";
+import { motion } from "framer-motion";
 
-function MyAppointments() {
-  const { doctors } = useContext(AppContext);
+const MyAppointments = () => {
+  const { backendUrl, token } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState([]);
-  const [payment, setPayment] = useState("");
+  const [tokenRTC, setTokenRTC] = useState(null);
+  const [channel, setChannel] = useState("");
+  const [uid, setUid] = useState("");
 
   const months = [
     "Jan",
@@ -27,29 +31,28 @@ function MyAppointments() {
     "Dec",
   ];
 
-  function slotDateFormat(slotDate) {
+  const slotDateFormat = (slotDate) => {
     const dateArray = slotDate.split("_");
-    return (
-      dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
-    );
-  }
+    return `${dateArray[0]} ${months[Number(dateArray[1]) - 1]} ${
+      dateArray[2]
+    }`;
+  };
 
-  async function getUserAppointments() {
+  const getUserAppointments = async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/user/appointments", {
+      const { data } = await axios.get(`${backendUrl}/api/user/appointments`, {
         headers: { token },
       });
-      setAppointments(data.appointments.reverse());
+      setAppointments([...data.appointments].reverse());
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
-  }
+  };
 
-  async function cancelAppointment() {
+  const cancelAppointment = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/user/cancel-appointment",
+        `${backendUrl}/api/user/cancel-appointment`,
         { appointmentId },
         { headers: { token } }
       );
@@ -60,78 +63,50 @@ function MyAppointments() {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
-  }
+  };
 
-  function initPay(order) {
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currency: order.currency,
-      name: "Appointment Payment",
-      description: "Appointment Payment",
-      order_id: order.id,
-      handler: async (response) => {
-        console.log(response);
-
-        try {
-          const { data } = await axios.post(
-            backendUrl + "/api/user/verifyRazorpay",
-            response,
-            { headers: { token } }
-          );
-          if (data.success) {
-            navigate("/my-appointments");
-            getUserAppointments();
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error(error.message);
-        }
-      },
-    };
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  }
-
-  async function appointmentRazorpay(appointmentId) {
+  const appointmentStripe = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/user/payment-razorpay",
+        `${backendUrl}/api/user/payment-stripe`,
         { appointmentId },
         { headers: { token } }
       );
       if (data.success) {
-        initPay(data.order);
+        window.location.replace(data.session_url);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
-  }
+  };
 
-  async function appointmentStripe(appointmentId) {
+  const getAgoraToken = async (channelParam, uidParam) => {
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/user/payment-stripe",
-        { appointmentId },
+      const { data } = await axios.get(
+        `${backendUrl}/api/agora/rtc-token?channel=${channelParam}&uid=${uidParam}`,
         { headers: { token } }
       );
-      if (data.success) {
-        const { session_url } = data;
-        window.location.replace(session_url);
-      } else {
-        toast.error(data.message);
-      }
+      return data.token || null;
     } catch (error) {
-      console.log(error);
-      toast.error(error.message);
+      toast.error("Failed to get video token.");
+      return null;
     }
-  }
+  };
+
+  const startVideoSession = async (item) => {
+    setChannel(item.channel);
+    setUid(item.uid);
+    const videoToken = await getAgoraToken(item.channel, item.uid);
+    if (videoToken) {
+      setTokenRTC(videoToken);
+    } else {
+      toast.error("Unable to start video session.");
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -140,112 +115,130 @@ function MyAppointments() {
   }, [token]);
 
   return (
-    <div>
-      <p className="pb-3 mt-12 text-lg font-medium text-gray-600 border-b">
-        My appointments
+    <div className="px-6 md:px-16 max-w-7xl mx-auto text-[#262626]">
+      <p className="pb-3 mt-12 text-2xl font-semibold text-center text-gray-700 border-b">
+        My Appointments
       </p>
-      <div className="">
+
+      <div className="grid gap-6 mt-8">
         {appointments.map((item, index) => (
-          <div
+          <motion.div
             key={index}
-            className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-4 border-b"
+            className="flex flex-col sm:flex-row gap-6 p-6 border rounded-2xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <div>
-              <img
-                className="w-36 bg-indigo-50"
-                src={item.docData.image}
-                alt=""
-              />
-            </div>
-            <div className="flex-1 text-sm text-zinc-600">
-              <p className="text-neutral-800 text-base font-semibold">
+            <img
+              className="w-full sm:w-36 h-36 object-cover rounded-xl bg-[#EAEFFF]"
+              src={item.docData.image}
+              alt=""
+            />
+            <div className="flex-1 text-sm text-gray-600 space-y-2">
+              <p className="text-[#262626] text-xl font-semibold">
                 {item.docData.name}
               </p>
               <p>{item.docData.speciality}</p>
-              <p className="text-zinc-700 font-medium mt-1">Address:</p>
-              <p className="">{item.docData.address.line1}</p>
-              <p className="">{item.docData.address.line2}</p>
-              <p className=" mt-1">
-                <span className="text-sm text-neutral-700 font-medium">
-                  Date & Time:
-                </span>{" "}
+              <div>
+                <p className="text-[#464646] font-medium mt-1">Address:</p>
+                <p>{item.docData.address.line1}</p>
+                <p>{item.docData.address.line2}</p>
+              </div>
+              <p className="mt-2">
+                <span className="font-medium text-gray-800">Date & Time:</span>{" "}
                 {slotDateFormat(item.slotDate)} | {item.slotTime}
               </p>
             </div>
-            <div></div>
-            <div className="flex flex-col gap-2 justify-end text-sm text-center">
-              {!item.cancelled &&
-                !item.payment &&
-                !item.isCompleted &&
-                payment !== item._id && (
-                  <button
-                    onClick={() => setPayment(item._id)}
-                    className="text-stone-500 sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    Pay Online
-                  </button>
-                )}
-              {!item.cancelled &&
-                !item.payment &&
-                !item.isCompleted &&
-                payment === item._id && (
-                  <button
-                    onClick={() => appointmentStripe(item._id)}
-                    className="text-stone-500 sm:min-w-48 py-2 border rounded hover:bg-gray-100 hover:text-white transition-all duration-300 flex items-center justify-center"
-                  >
-                    <img
-                      className="max-w-20 max-h-5"
-                      src={assets.stripe_logo}
-                      alt=""
-                    />
-                  </button>
-                )}
-              {!item.cancelled &&
-                !item.payment &&
-                !item.isCompleted &&
-                payment === item._id && (
-                  <button
-                    onClick={() => appointmentRazorpay(item._id)}
-                    className="text-[#696969] sm:min-w-48 py-2 border rounded hover:bg-gray-100 hover:text-white transition-all duration-300 flex items-center justify-center"
-                  >
-                    <img
-                      className="max-w-20 max-h-5"
-                      src={assets.razorpay_logo}
-                      alt=""
-                    />
-                  </button>
-                )}
+
+            <div className="flex flex-col gap-2 justify-center text-sm text-center">
+              {!item.cancelled && !item.payment && !item.isCompleted && (
+                <button
+                  onClick={() => appointmentStripe(item._id)}
+                  className="py-2 px-4 border rounded-full text-gray-700 hover:bg-primary hover:text-white transition-all duration-300"
+                >
+                  Pay Online
+                </button>
+              )}
 
               {!item.cancelled && item.payment && !item.isCompleted && (
-                <button className="sm:min-w-48 py-2 border rounded text-[#696969] bg-[#EAEFFF]">
-                  Paid
-                </button>
+                <>
+                  <button
+                    onClick={() => startVideoSession(item)}
+                    className="py-2 px-4 border rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300"
+                  >
+                    Start Video Call
+                  </button>
+                  <button className="py-2 px-4 border rounded-full text-green-600 border-green-500 bg-green-50">
+                    Paid
+                  </button>
+                </>
               )}
 
               {item.isCompleted && (
-                <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">
+                <button className="py-2 px-4 border border-green-500 rounded-full text-green-600 bg-green-50">
                   Completed
                 </button>
               )}
+
               {!item.cancelled && !item.isCompleted && (
                 <button
                   onClick={() => cancelAppointment(item._id)}
-                  className="text-[#696969] sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300"
+                  className="py-2 px-4 border rounded-full text-red-600 border-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
                 >
-                  Cancel appointment
+                  Cancel Appointment
                 </button>
               )}
+
               {item.cancelled && !item.isCompleted && (
-                <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">
-                  Appointment cancelled
+                <button className="py-2 px-4 border border-red-500 rounded-full text-red-600 bg-red-50">
+                  Appointment Cancelled
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
+
+      {tokenRTC && (
+        <motion.div
+          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="relative bg-white p-6 sm:p-8 rounded-2xl shadow-2xl text-center max-w-3xl w-full flex flex-col items-center"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h2 className="text-2xl font-bold text-[#126A9C] mb-4">
+              Live Video Consultation
+            </h2>
+
+            <div className="w-full h-[400px] sm:h-[500px] bg-black rounded-xl overflow-hidden shadow-md flex items-center justify-center">
+              <AppVideoCall
+                channel={channel}
+                token={tokenRTC}
+                uid={uid}
+                onClose={() => setTokenRTC(null)}
+              />
+            </div>
+
+            <button
+              onClick={() => setTokenRTC(null)}
+              className="absolute top-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
+              title="End Call"
+            >
+              ✕
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
-}
+};
 
 export default MyAppointments;

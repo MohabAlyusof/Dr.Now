@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { assets } from "../assets/assets";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { assets } from "../assets/assets";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,36 +15,36 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between text-sm py-2 mb-5 border-b border-b-[#ADADAD]">
-      
-<img
-  onClick={() => navigate("/")}
-  className="cursor-pointer"
-  style={{ width: "200px" }}
-  src={assets.logo}
-  alt=""
-/>
-
-
-      <ul className="md:flex items-start gap-5 font-medium hidden">
-        <NavLink to="/" className="group">
-          <li className="py-1">HOME</li>
-          <hr className="border-none outline-none h-0.5 bg-[#126A9C] w-3/5 m-auto hidden group-hover:block" />
-        </NavLink>
-        <NavLink to="/doctors" className="group">
-          <li className="py-1">ALL DOCTORS</li>
-          <hr className="border-none outline-none h-0.5 bg-[#126A9C] w-3/5 m-auto hidden group-hover:block" />
-        </NavLink>
-        <NavLink to="/about" className="group">
-          <li className="py-1">ABOUT</li>
-          <hr className="border-none outline-none h-0.5 bg-[#126A9C] w-3/5 m-auto hidden group-hover:block" />
-        </NavLink>
-        <NavLink to="/contact" className="group">
-          <li className="py-1">CONTACT</li>
-          <hr className="border-none outline-none h-0.5 bg-[#126A9C] w-3/5 m-auto hidden group-hover:block" />
-        </NavLink>
+    <div
+      className="flex items-center justify-between px-6 md:px-16 py-4 
+                 bg-gradient-to-r from-[#0D1B2A] to-[#126A9C] text-sm text-gray-100 
+                 rounded-t-2xl rounded-b-xl max-w-7xl mx-auto mt-6 shadow-md"
+      style={{
+        boxShadow:
+          "0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <img
+        onClick={() => navigate("/")}
+        className="w-36 cursor-pointer"
+        src={assets.logo}
+        alt="Logo"
+      />
+      <ul className="hidden md:flex items-center gap-8 font-medium text-lg">
+        {["/", "/doctors", "/about", "/contact"].map((path, idx) => (
+          <NavLink
+            key={idx}
+            to={path}
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#2F9650] border-b-2 border-[#2F9650] pb-1 transition"
+                : "hover:text-[#2F9650] transition"
+            }
+          >
+            {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
+          </NavLink>
+        ))}
       </ul>
-
       <div className="flex items-center gap-4">
         {token && userData ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
@@ -73,64 +73,45 @@ const Navbar = () => {
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className="bg-[#126A9C] text-white px-8 py-3 rounded-full font-light hidden md:block"
+            className="bg-white  text-gray-700  px-8 py-3 rounded-full font-light hidden md:block 
+                       hover:scale-105 hover:shadow-lg transition-transform duration-300"
           >
-            Create account
+            Create Account
           </button>
         )}
-
         <img
           onClick={() => setShowMenu(true)}
-          className="w-6 md:hidden"
+          className="w-6 md:hidden cursor-pointer"
           src={assets.menu_icon}
-          alt=""
+          alt="Menu"
         />
-
-        <div
-          className={`md:hidden ${
-            showMenu ? "fixed w-full" : "h-0 w-0"
-          } right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}
-        >
-          <div className="flex items-center justify-between px-5 py-6">
-            <img src={assets.logo} className="w-36" alt="" />
-            <img
-              onClick={() => setShowMenu(false)}
-              src={assets.cross_icon}
-              className="w-7"
-              alt=""
-            />
-          </div>
-          <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
-            <NavLink
-              onClick={() => setShowMenu(false)}
-              to="/"
-              className="px-4 py-2 rounded-full inline-block"
-            >
-              HOME
-            </NavLink>
-            <NavLink
-              onClick={() => setShowMenu(false)}
-              to="/doctors"
-              className="px-4 py-2 rounded-full inline-block"
-            >
-              ALL DOCTORS
-            </NavLink>
-            <NavLink
-              onClick={() => setShowMenu(false)}
-              to="/about"
-              className="px-4 py-2 rounded-full inline-block"
-            >
-              ABOUT
-            </NavLink>
-            <NavLink
-              onClick={() => setShowMenu(false)}
-              to="/contact"
-              className="px-4 py-2 rounded-full inline-block"
-            >
-              CONTACT
-            </NavLink>
-          </ul>
+      </div>
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform ${
+          showMenu ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300 z-50 rounded-l-2xl`}
+      >
+        <div className="flex justify-between items-center p-5 border-b">
+          <img src={assets.logo} className="w-28" alt="Logo" />
+          <img
+            onClick={() => setShowMenu(false)}
+            src={assets.cross_icon}
+            className="w-6 cursor-pointer"
+            alt="Close"
+          />
         </div>
+        <ul className="flex flex-col items-start gap-4 p-5 text-gray-700 font-medium">
+          {["/", "/doctors", "/about", "/contact"].map((path, idx) => (
+            <NavLink
+              key={idx}
+              onClick={() => setShowMenu(false)}
+              to={path}
+              className="w-full block hover:text-[#126A9C] py-2 border-b"
+            >
+              {path === "/" ? "Home" : path.replace("/", "").toUpperCase()}
+            </NavLink>
+          ))}
+        </ul>
       </div>
     </div>
   );
