@@ -5,7 +5,6 @@ import { assets } from '../assets/assets';
 import RelatedDoctors from '../components/RelatedDoctors';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -52,22 +51,26 @@ const Appointment = () => {
 
   const handleMonthChange = (direction) => {
     if (direction === 'prev') {
-      if (currentMonth === 0) {
-        setCurrentMonth(11);
-        setCurrentYear(currentYear - 1);
-      } else {
-        setCurrentMonth(currentMonth - 1);
+      if (currentYear > today.getFullYear() || (currentYear === today.getFullYear() && currentMonth > today.getMonth())) {
+        if (currentMonth === 0) {
+          setCurrentMonth(11);
+          setCurrentYear(currentYear - 1);
+        } else {
+          setCurrentMonth(currentMonth - 1);
+        }
+        setSelectedDay(null);
+        setSelectedTime('');
       }
-    } else {
+    } else if (direction === 'next') {
       if (currentMonth === 11) {
         setCurrentMonth(0);
         setCurrentYear(currentYear + 1);
       } else {
         setCurrentMonth(currentMonth + 1);
       }
+      setSelectedDay(null);
+      setSelectedTime('');
     }
-    setSelectedDay(null);
-    setSelectedTime('');
   };
 
   const bookAppointment = async () => {
@@ -110,42 +113,37 @@ const Appointment = () => {
   }, [docInfo, currentMonth, currentYear]);
 
   return docInfo ? (
-    <div className="max-w-7xl mx-auto p-4">
-      {/* Doctor Details */}
-      <motion.div 
-        className="flex flex-col sm:flex-row gap-6 items-center mt-6"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <img className="bg-primary w-full sm:max-w-72 rounded-2xl shadow-lg object-cover" src={docInfo.image} alt="" />
-        
-        <div className="flex-1 border border-gray-200 rounded-2xl p-8 bg-white shadow-md">
-          <p className="flex items-center gap-2 text-3xl font-semibold text-gray-700">
+    <div className="max-w-9xl mx-auto p-4">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div>
+          <img className="bg-primary w-full sm:max-w-72 rounded-lg" src={docInfo.image} alt="" />
+        </div>
+
+        <div className="flex-1 border border-[#ADADAD] rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
+          <p className="flex items-center gap-2 text-3xl font-medium text-gray-700">
             {docInfo.name}
             <img className="w-5" src={assets.verified_icon} alt="Verified" />
           </p>
-          <div className="flex items-center gap-2 mt-2 text-gray-600">
+          <div className="flex items-center gap-2 mt-1 text-gray-600">
             <p>{docInfo.degree} - {docInfo.speciality}</p>
-            <span className="py-1 px-3 border text-xs rounded-full bg-gray-100">{docInfo.experience}</span>
+            <button className="py-0.5 px-2 border text-xs rounded-full">{docInfo.experience}</button>
           </div>
-          <div className="mt-4">
+          <div className="mt-3">
             <p className="flex items-center gap-1 text-sm font-medium text-[#262626]">
               About <img className="w-3" src={assets.info_icon} alt="Info" />
             </p>
-            <p className="text-sm text-gray-600 mt-2">{docInfo.about}</p>
+            <p className="text-sm text-gray-600 max-w-[700px] mt-1">{docInfo.about}</p>
           </div>
           <p className="text-gray-600 font-medium mt-4">
             Appointment fee: <span className="text-gray-800">{currencySymbol}{docInfo.fees}</span>
           </p>
         </div>
-      </motion.div>
-
-      {/* Calendar Controls */}
-      <div className="flex justify-between items-center my-8">
+      </div>
+      <div className="flex justify-between items-center my-6">
         <button 
           onClick={() => handleMonthChange('prev')} 
-          className="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
+          disabled={currentYear === today.getFullYear() && currentMonth === today.getMonth()}
+          className="px-4 py-2 border rounded hover:bg-gray-200 disabled:opacity-50"
         >
           Previous
         </button>
@@ -154,14 +152,12 @@ const Appointment = () => {
         </h3>
         <button 
           onClick={() => handleMonthChange('next')} 
-          className="px-4 py-2 border rounded-xl hover:bg-gray-100 transition"
+          className="px-4 py-2 border rounded hover:bg-gray-200"
         >
           Next
         </button>
       </div>
-
-      {/* Calendar */}
-      <div className="grid grid-cols-7 gap-2 text-center mb-8">
+      <div className="grid grid-cols-7 gap-2 text-center">
         {daysOfWeek.map(day => (
           <div key={day} className="font-bold text-gray-700">{day}</div>
         ))}
@@ -171,49 +167,44 @@ const Appointment = () => {
         {docSlots.map(({ day }, idx) => {
           const isPast = currentYear === today.getFullYear() && currentMonth === today.getMonth() && day < currentDate;
           return (
-            <motion.div
+            <div
               key={idx}
               onClick={() => !isPast && setSelectedDay(day)}
-              className={`p-3 rounded-full border cursor-pointer transition-all ${
-                isPast ? 'bg-gray-100 text-gray-400 cursor-not-allowed' :
-                selectedDay === day ? 'bg-blue-600 text-white shadow-lg' : 'hover:bg-blue-100'
+              className={`p-2 rounded-full border cursor-pointer ${
+                isPast ? 'bg-gray-200 text-gray-400 cursor-not-allowed' :
+                selectedDay === day ? 'bg-blue-500 text-white' : 'hover:bg-blue-100'
               }`}
-              whileHover={!isPast ? { scale: 1.1 } : {}}
             >
               {day}
-            </motion.div>
+            </div>
           );
         })}
       </div>
-
-      {/* Time Slots */}
       {selectedDay && (
         <>
-          <h3 className="text-lg font-medium mb-4 text-center">Select a Time</h3>
-          <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-4 justify-center mb-8">
+          <h3 className="text-lg font-medium mt-8 mb-4 text-center">Select a Time</h3>
+          <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 justify-center">
             {docSlots.find(d => d.day === selectedDay)?.slots.map((time, idx) => (
-              <motion.button
+              <button
                 key={idx}
                 onClick={() => setSelectedTime(time)}
-                className={`px-4 py-2 text-sm rounded-full border transition-all ${
-                  selectedTime === time ? 'bg-blue-600 text-white shadow-md' : 'text-gray-600 hover:bg-blue-100'
+                className={`px-4 py-2 text-sm rounded-full border transition ${
+                  selectedTime === time ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-blue-100'
                 }`}
-                whileHover={{ scale: 1.05 }}
               >
                 {time}
-              </motion.button>
+              </button>
             ))}
           </div>
 
           {selectedTime && (
             <div className="text-center mt-8">
-              <motion.button
+              <button
                 onClick={bookAppointment}
-                className="bg-blue-600 text-white px-8 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
-                whileHover={{ scale: 1.05 }}
+                className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition"
               >
                 Confirm Appointment on {selectedDay}/{currentMonth + 1}/{currentYear} at {selectedTime}
-              </motion.button>
+              </button>
             </div>
           )}
         </>

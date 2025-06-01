@@ -13,7 +13,6 @@ const Header = () => {
                    bg-gradient-to-l from-[#2F9650] to-[#126A9C] 
                    rounded-2xl text-white py-10 md:py-14 shadow-lg overflow-visible"
       >
-        {/* ✅ Left Section (Text + Button) */}
         <motion.div
           className="relative z-10 md:w-1/2 flex flex-col gap-6 text-center md:text-left"
           initial={{ opacity: 0, y: 50 }}
@@ -35,11 +34,7 @@ const Header = () => {
             Book Appointment
           </button>
         </motion.div>
-
-        {/* ✅ Spacer to preserve layout balance */}
         <div className="md:w-1/2 h-[180px] sm:h-[240px] md:h-[320px] lg:h-[400px]"></div>
-
-        {/* ✅ Image (absolute, animated) */}
         <motion.img
           src={assets.header_img}
           alt="Trusted Doctors"

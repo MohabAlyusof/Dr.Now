@@ -16,14 +16,11 @@ const About = () => {
       viewport={{ once: true, amount: 0.2 }}
       variants={fadeInVariant}
     >
-      {/* Heading */}
       <div className="text-center text-2xl pt-10 text-[#707070]">
         <p>
           ABOUT <span className="text-gray-700 font-semibold">US</span>
         </p>
       </div>
-
-      {/* Image & Text */}
       <motion.div
         className="my-12 flex flex-col md:flex-row items-center gap-12"
         variants={fadeInVariant}
@@ -59,8 +56,6 @@ const About = () => {
           </p>
         </div>
       </motion.div>
-
-      {/* Section Title */}
       <motion.div
         className="text-center text-xl my-8 text-[#707070]"
         variants={fadeInVariant}
@@ -69,8 +64,6 @@ const About = () => {
           WHY <span className="text-gray-700 font-semibold">CHOOSE US</span>
         </p>
       </motion.div>
-
-      {/* Features */}
       <motion.div
         className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
         variants={fadeInVariant}
