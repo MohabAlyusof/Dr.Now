@@ -129,6 +129,4 @@ const AdminContextProvider = (props) => {
         </AdminContext.Provider>
     )
 
-}
-
-export default AdminContextProvider
+export default AdminContextProvider;
