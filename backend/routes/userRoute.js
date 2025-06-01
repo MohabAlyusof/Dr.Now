@@ -16,6 +16,7 @@ import upload from "../middleware/multer.js";
 import authUser from "../middleware/authUser.js";
 
 const userRouter = express.Router();
+
 userRouter.get("/agora/rtc-token", generateAgoraToken);
 
 userRouter.post("/register", registerUser);
