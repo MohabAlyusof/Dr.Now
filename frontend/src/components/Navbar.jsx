@@ -21,7 +21,6 @@ const Navbar = () => {
                  rounded-t-2xl rounded-b-xl max-w-7xl mx-auto mt-6 shadow-md"
       style={{ boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} 
     >
-      {/* ✅ Logo */}
       <img 
         onClick={() => navigate('/')} 
         className="w-36 cursor-pointer" 

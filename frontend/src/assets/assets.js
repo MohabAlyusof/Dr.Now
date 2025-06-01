@@ -1,6 +1,5 @@
 import appointment_img from "./doc/appointment_img.png";
 import header_img from "./doc/header_img.png";
-import banner_img from "./doc/banner_img.png";
 import group_profiles from "./doc/group_profiles.png";
 import contact_image from "./doc/contact_image.png";
 import about_image from "./doc/about_image.png";
@@ -38,7 +37,6 @@ import Pediatricians from "./doc/Pediatricians.svg";
 export const assets = {
   appointment_img,
   header_img,
-  banner_img,
   group_profiles,
   logo,
   chats_icon,
