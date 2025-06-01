@@ -1,26 +1,27 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import AgoraRTC from 'agora-rtc-sdk-ng';
-import axios from 'axios';
-import { AppContext } from '../context/AppContext';
+import React, { useEffect, useRef, useState, useContext } from "react";
+import AgoraRTC from "agora-rtc-sdk-ng";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
 
-const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 function AppVideoCall({ channel, uid, onClose }) {
   const [joined, setJoined] = useState(false);
   const localVideoRef = useRef(null);
-  const { token } = useContext(AppContext); // Token from context
-
+  const { token } = useContext(AppContext);
   const appId = import.meta.env.VITE_AGORA_APP_ID;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const fetchTokenAndStartCall = async () => {
     try {
-      const res = await axios.get(`${backendUrl}/api/agora/rtc-token?channel=${channel}&uid=${uid}`, {
-        headers: { token }, // Use token from context
-      });
+      const res = await axios.get(
+        `${backendUrl}/api/agora/rtc-token?channel=${channel}&uid=${uid}`,
+        {
+          headers: { token },
+        }
+      );
 
-      const rtcToken = res.data.token; // ✅ Use a different variable name to avoid conflict
-
+      const rtcToken = res.data.token;
       if (!rtcToken) {
         console.error("❌ Token not received from server.");
         return;
@@ -41,7 +42,8 @@ function AppVideoCall({ channel, uid, onClose }) {
 
       await client.join(appId, channel, rtcToken, uid);
 
-      const [microphoneTrack, cameraTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
+      const [microphoneTrack, cameraTrack] =
+        await AgoraRTC.createMicrophoneAndCameraTracks();
 
       if (localVideoRef.current) {
         cameraTrack.play(localVideoRef.current);
@@ -49,17 +51,17 @@ function AppVideoCall({ channel, uid, onClose }) {
 
       await client.publish([microphoneTrack, cameraTrack]);
 
-      client.on('user-published', async (user, mediaType) => {
+      client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
 
-        if (mediaType === 'video') {
-          const remoteContainer = document.createElement('div');
+        if (mediaType === "video") {
+          const remoteContainer = document.createElement("div");
           remoteContainer.id = `remote-${user.uid}`;
-          remoteContainer.style.width = '320px';
-          remoteContainer.style.height = '240px';
-          remoteContainer.style.margin = '5px';
+          remoteContainer.style.width = "320px";
+          remoteContainer.style.height = "240px";
+          remoteContainer.style.margin = "5px";
 
-          const remoteStreams = document.getElementById('remote-streams');
+          const remoteStreams = document.getElementById("remote-streams");
           if (remoteStreams) {
             remoteStreams.appendChild(remoteContainer);
             user.videoTrack.play(remoteContainer);
@@ -67,14 +69,14 @@ function AppVideoCall({ channel, uid, onClose }) {
         }
       });
 
-      client.on('user-unpublished', (user) => {
+      client.on("user-unpublished", (user) => {
         const remoteContainer = document.getElementById(`remote-${user.uid}`);
         if (remoteContainer) remoteContainer.remove();
       });
 
       setJoined(true);
     } catch (error) {
-      console.error('❌ Error starting call:', error);
+      console.error("❌ Error starting call:", error);
     }
   };
 
@@ -98,21 +100,21 @@ function AppVideoCall({ channel, uid, onClose }) {
     <div className="p-4 border rounded bg-white shadow-lg">
       <h3 className="text-lg font-semibold mb-2">📞 Live Video Session</h3>
       <div className="flex gap-4 flex-wrap">
-        <div 
-          ref={localVideoRef} 
+        <div
+          ref={localVideoRef}
           className="w-full sm:w-1/2 h-64 bg-black text-white flex items-center justify-center"
         >
           <p>Local Video</p>
         </div>
-        <div 
-          id="remote-streams" 
+        <div
+          id="remote-streams"
           className="w-full sm:w-1/2 h-64 bg-gray-800 text-white flex items-center justify-center"
         >
           <p>Remote Videos</p>
         </div>
       </div>
-      <button 
-        onClick={leaveCall} 
+      <button
+        onClick={leaveCall}
         className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
       >
         End Call

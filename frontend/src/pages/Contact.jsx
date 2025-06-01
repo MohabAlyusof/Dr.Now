@@ -63,6 +63,7 @@ const Contact = () => {
           CONTACT <span className="text-gray-700 font-semibold">US</span>
         </p>
       </div>
+
       <motion.div
         className="my-12 flex flex-col md:flex-row items-center gap-12 text-sm"
         variants={fadeInVariant}
@@ -72,6 +73,7 @@ const Contact = () => {
           src={assets.contact_image}
           alt="Contact"
         />
+
         <div className="flex flex-col justify-center items-start gap-6 text-gray-600 leading-relaxed md:w-2/4">
           <div>
             <p className="font-semibold text-lg">Dr.Now Office</p>
@@ -86,6 +88,7 @@ const Contact = () => {
               Email: dr.now2025@gmail.com
             </p>
           </div>
+
           <div className="pt-4">
             <p className="font-semibold text-lg">Questions or Requests?</p>
             <p className="text-gray-500 mt-1">
@@ -96,6 +99,7 @@ const Contact = () => {
           </div>
         </div>
       </motion.div>
+
       <motion.div
         className="bg-gray-50 p-8 rounded-2xl shadow-lg mb-20"
         variants={fadeInVariant}
