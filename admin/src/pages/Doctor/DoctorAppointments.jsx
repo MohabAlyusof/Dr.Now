@@ -1,10 +1,16 @@
-import React, { useContext, useEffect } from 'react';
-import { DoctorContext } from '../../context/DoctorContext';
-import { AppContext } from '../../context/AppContext';
-import { assets } from '../../assets/assets';
+import React, { useContext, useEffect } from "react";
+import { DoctorContext } from "../../context/DoctorContext";
+import { AppContext } from "../../context/AppContext";
+import { assets } from "../../assets/assets";
 
 const DoctorAppointments = () => {
-  const { dToken, appointments, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext);
+  const {
+    dToken,
+    appointments,
+    getAppointments,
+    cancelAppointment,
+    completeAppointment,
+  } = useContext(DoctorContext);
   const { slotDateFormat, calculateAge, currency } = useContext(AppContext);
 
   useEffect(() => {
@@ -34,30 +40,48 @@ const DoctorAppointments = () => {
             <p className="max-sm:hidden">{index + 1}</p>
 
             <div className="flex items-center gap-2">
-              <img src={item.userData.image} className="w-7 h-7 rounded-full object-cover" alt="Patient" />
+              <img
+                src={item.userData.image}
+                className="w-7 h-7 rounded-full object-cover"
+                alt="Patient"
+              />
               <p className="font-medium">{item.userData.name}</p>
             </div>
 
             <p>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.payment ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>
-                {item.payment ? 'Online' : 'Cash'}
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  item.payment
+                    ? "bg-green-100 text-green-600"
+                    : "bg-yellow-100 text-yellow-600"
+                }`}
+              >
+                {item.payment ? "Online" : "Cash"}
               </span>
             </p>
 
             <p className="max-sm:hidden">
-              {item.userData.dob ? calculateAge(item.userData.dob) : 'N/A'}
+              {item.userData.dob ? calculateAge(item.userData.dob) : "N/A"}
             </p>
 
             <p>
-              {slotDateFormat(item.slotDate)}, <span className="text-gray-500">{item.slotTime}</span>
+              {slotDateFormat(item.slotDate)},{" "}
+              <span className="text-gray-500">{item.slotTime}</span>
             </p>
 
-            <p>{currency}{item.amount}</p>
+            <p>
+              {currency}
+              {item.amount}
+            </p>
 
             {item.cancelled ? (
-              <span className="px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs font-medium">Cancelled</span>
+              <span className="px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs font-medium">
+                Cancelled
+              </span>
             ) : item.isCompleted ? (
-              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Completed</span>
+              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                Completed
+              </span>
             ) : (
               <div className="flex gap-1">
                 <img

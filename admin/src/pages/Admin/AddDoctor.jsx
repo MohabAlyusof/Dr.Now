@@ -1,22 +1,22 @@
-import React, { useContext, useState } from 'react';
-import { assets } from '../../assets/assets';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { AdminContext } from '../../context/AdminContext';
-import { AppContext } from '../../context/AppContext';
+import React, { useContext, useState } from "react";
+import { assets } from "../../assets/assets";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { AdminContext } from "../../context/AdminContext";
+import { AppContext } from "../../context/AppContext";
 
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [experience, setExperience] = useState('1 Year');
-  const [fees, setFees] = useState('');
-  const [about, setAbout] = useState('');
-  const [speciality, setSpeciality] = useState('General physician');
-  const [degree, setDegree] = useState('');
-  const [address1, setAddress1] = useState('');
-  const [address2, setAddress2] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [experience, setExperience] = useState("1 Year");
+  const [fees, setFees] = useState("");
+  const [about, setAbout] = useState("");
+  const [speciality, setSpeciality] = useState("General physician");
+  const [degree, setDegree] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
 
   const { backendUrl } = useContext(AppContext);
   const { aToken } = useContext(AdminContext);
@@ -25,35 +25,42 @@ const AddDoctor = () => {
     event.preventDefault();
 
     try {
-      if (!docImg) return toast.error('Image Not Selected');
+      if (!docImg) return toast.error("Image Not Selected");
 
       const formData = new FormData();
-      formData.append('image', docImg);
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('experience', experience);
-      formData.append('fees', Number(fees));
-      formData.append('about', about);
-      formData.append('speciality', speciality);
-      formData.append('degree', degree);
-      formData.append('address', JSON.stringify({ line1: address1, line2: address2 }));
+      formData.append("image", docImg);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("experience", experience);
+      formData.append("fees", Number(fees));
+      formData.append("about", about);
+      formData.append("speciality", speciality);
+      formData.append("degree", degree);
+      formData.append(
+        "address",
+        JSON.stringify({ line1: address1, line2: address2 })
+      );
 
-      const { data } = await axios.post(backendUrl + '/api/admin/add-doctor', formData, {
-        headers: { aToken },
-      });
+      const { data } = await axios.post(
+        backendUrl + "/api/admin/add-doctor",
+        formData,
+        {
+          headers: { aToken },
+        }
+      );
 
       if (data.success) {
         toast.success(data.message);
         setDocImg(false);
-        setName('');
-        setPassword('');
-        setEmail('');
-        setAddress1('');
-        setAddress2('');
-        setDegree('');
-        setAbout('');
-        setFees('');
+        setName("");
+        setPassword("");
+        setEmail("");
+        setAddress1("");
+        setAddress2("");
+        setDegree("");
+        setAbout("");
+        setFees("");
       } else {
         toast.error(data.message);
       }
@@ -64,7 +71,10 @@ const AddDoctor = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className="px-6 py-6 w-full bg-[#F8F9FD] min-h-screen">
+    <form
+      onSubmit={onSubmitHandler}
+      className="px-6 py-6 w-full bg-[#F8F9FD] min-h-screen"
+    >
       <p className="text-2xl font-semibold text-gray-700 mb-6">Add Doctor</p>
 
       <div className="bg-white px-8 py-10 border rounded-2xl w-full max-w-5xl shadow-md overflow-y-auto">
@@ -76,17 +86,46 @@ const AddDoctor = () => {
               alt="upload"
             />
           </label>
-          <input onChange={(e) => setDocImg(e.target.files[0])} type="file" id="doc-img" hidden />
+          <input
+            onChange={(e) => setDocImg(e.target.files[0])}
+            type="file"
+            id="doc-img"
+            hidden
+          />
           <p className="text-sm text-gray-600">Upload doctor picture</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10 text-gray-700">
           <div className="w-full lg:flex-1 flex flex-col gap-4">
             {[
-              { label: 'Your name', value: name, onChange: setName, type: 'text', placeholder: 'Name' },
-              { label: 'Doctor Email', value: email, onChange: setEmail, type: 'email', placeholder: 'Email' },
-              { label: 'Set Password', value: password, onChange: setPassword, type: 'password', placeholder: 'Password' },
-              { label: 'Fees', value: fees, onChange: setFees, type: 'number', placeholder: 'Doctor fees' },
+              {
+                label: "Your name",
+                value: name,
+                onChange: setName,
+                type: "text",
+                placeholder: "Name",
+              },
+              {
+                label: "Doctor Email",
+                value: email,
+                onChange: setEmail,
+                type: "email",
+                placeholder: "Email",
+              },
+              {
+                label: "Set Password",
+                value: password,
+                onChange: setPassword,
+                type: "password",
+                placeholder: "Password",
+              },
+              {
+                label: "Fees",
+                value: fees,
+                onChange: setFees,
+                type: "number",
+                placeholder: "Doctor fees",
+              },
             ].map((field, idx) => (
               <div key={idx} className="flex flex-col gap-1">
                 <label className="text-sm">{field.label}</label>
@@ -110,7 +149,7 @@ const AddDoctor = () => {
               >
                 {[...Array(10)].map((_, i) => (
                   <option key={i} value={`${i + 1} Year`}>
-                    {i + 1} {i === 0 ? 'Year' : 'Years'}
+                    {i + 1} {i === 0 ? "Year" : "Years"}
                   </option>
                 ))}
               </select>
@@ -125,8 +164,17 @@ const AddDoctor = () => {
                 value={speciality}
                 className="border rounded-lg px-4 py-2 focus:outline-[#126A9C] focus:ring-1"
               >
-                {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec, i) => (
-                  <option key={i} value={spec}>{spec}</option>
+                {[
+                  "General physician",
+                  "Gynecologist",
+                  "Dermatologist",
+                  "Pediatricians",
+                  "Neurologist",
+                  "Gastroenterologist",
+                ].map((spec, i) => (
+                  <option key={i} value={spec}>
+                    {spec}
+                  </option>
                 ))}
               </select>
             </div>

@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { AdminContext } from '../../context/AdminContext';
+import React, { useContext, useEffect } from "react";
+import { AdminContext } from "../../context/AdminContext";
 
 const DoctorsList = () => {
-  const { doctors, changeAvailability, aToken, getAllDoctors } = useContext(AdminContext);
+  const { doctors, changeAvailability, aToken, getAllDoctors } =
+    useContext(AdminContext);
 
   useEffect(() => {
     if (aToken) {
@@ -26,7 +27,9 @@ const DoctorsList = () => {
               alt={item.name}
             />
             <div className="p-4">
-              <p className="text-[#262626] text-lg font-semibold mb-1">{item.name}</p>
+              <p className="text-[#262626] text-lg font-semibold mb-1">
+                {item.name}
+              </p>
               <p className="text-[#5C5C5C] text-sm">{item.speciality}</p>
               <div className="mt-3 flex items-center gap-2 text-sm">
                 <input
