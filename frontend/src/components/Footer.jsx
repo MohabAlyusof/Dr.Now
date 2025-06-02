@@ -43,7 +43,7 @@ const Footer = () => {
               <li className="flex items-center gap-2">
                 <FaPhoneAlt className="text-[#2F9650]" /> +49 1575 6910542
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-1">
                 <FaEnvelope className="text-[#2F9650]" />
                 <a href="mailto:Dr.Now2025@gmail.com" className="hover:text-white hover:underline">
                   Dr.Now2025@gmail.com
