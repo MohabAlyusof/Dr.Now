@@ -31,7 +31,7 @@ const About = () => {
           alt="About"
         />
 
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600 leading-relaxed">
+        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-l text-gray-600 leading-relaxed">
           <p>
             Welcome to <b className="text-[#126A9C]">Dr.Now</b> — your reliable
             partner for modern digital healthcare. At Dr.Now, we understand the
@@ -46,7 +46,7 @@ const About = () => {
             appointment or managing ongoing treatments, Dr.Now is here to
             support you every step of the way.
           </p>
-          <b className="text-gray-800 text-base">Our Vision</b>
+          <b className="text-gray-800 text-xl">Our Vision</b>
           <p>
             Our vision at <b className="text-[#126A9C]">Dr.Now</b> is to create
             a seamless connection between patients and healthcare providers. We
