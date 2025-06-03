@@ -65,7 +65,7 @@ const MyProfile = () => {
                 alt="Profile"
               />
               <img
-                className="w-10 absolute bottom-2 right-2"
+                className="w-10 absolute top-12 left-14"
                 src={assets.upload_icon}
                 alt="Upload"
               />
