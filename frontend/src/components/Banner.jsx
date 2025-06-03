@@ -7,9 +7,11 @@ const Banner = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-gradient-to-r from-[#2F9650] to-[#126A9C] rounded-2xl shadow-lg overflow-visible mt-16 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between text-white">
+    <div className="relative bg-gradient-to-r from-[#2F9650] to-[#126A9C] rounded-2xl shadow-lg overflow-hidden mt-16 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between text-white">
+
+      {/* ✅ Left Section: Text + Button (animiert von unten) */}
       <motion.div
-        className="relative z-10 md:w-1/2 text-center md:text-left flex flex-col gap-6"
+        className="md:w-1/2 text-center md:text-left flex flex-col gap-6 z-10"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -18,8 +20,7 @@ const Banner = () => {
           Join Our Community Today!
         </h1>
         <p className="text-sm sm:text-base font-light max-w-md mx-auto md:mx-0">
-          Sign up now and connect with trusted healthcare professionals
-          instantly.
+          Sign up now and connect with trusted healthcare professionals instantly.
         </p>
         <button
           onClick={() => navigate("/login?mode=signup")}
@@ -28,14 +29,17 @@ const Banner = () => {
           Create Account
         </button>
       </motion.div>
+
+      {/* ✅ Right Section: Adjusted Doctor Image */}
       <motion.img
         src={assets.appointment_img}
         alt="Doctor"
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        className="absolute bottom-0 right-10 h-[220px] sm:h-[280px] md:h-[340px] lg:h-[420px] object-contain pointer-events-none"
+        className="relative md:absolute md:right-[125px] md:bottom-0 h-[200px] sm:h-[260px] md:h-[300px] lg:h-[360px] object-contain pointer-events-none opacity-90"
       />
+
     </div>
   );
 };
