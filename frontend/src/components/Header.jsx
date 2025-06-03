@@ -7,44 +7,45 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pt-10 mb-16">
-      <div
-        className="relative max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row items-center justify-between 
-                   bg-gradient-to-l from-[#2F9650] to-[#126A9C] 
-                   rounded-2xl text-white py-10 md:py-14 shadow-lg overflow-visible"
-      >
+    <header className="pt-6 mb-12">
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 items-center bg-gradient-to-r from-[#126A9C] to-[#2F9650] text-white rounded-3xl shadow-lg overflow-hidden">
+
+        {/* Left: Text */}
         <motion.div
-          className="relative z-10 md:w-1/2 flex flex-col gap-6 text-center md:text-left"
-          initial={{ opacity: 0, y: 50 }}
+          className="flex flex-col gap-6 text-center md:text-left py-8 md:py-14 px-4 md:px-6 lg:px-8 z-10"
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
-            Book Appointment <br /> With Trusted Doctors
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+            Book with Trusted <br /> Healthcare Professionals
           </h1>
-          <p className="text-sm font-light">
-            Simply browse through our extensive list of trusted doctors and
-            schedule your <br /> appointment hassle-free.
+          <p className="text-base text-white/90 leading-relaxed max-w-md mx-auto md:mx-0">
+            Explore our certified doctor network and book your appointment easily — comfort, trust, and care in every visit.
           </p>
           <button
             onClick={() => navigate("/doctors")}
-            className="w-full max-w-[240px] bg-white text-gray-700 px-8 py-3 rounded-full 
-                       hover:scale-105 hover:shadow-xl transition-all duration-300 mx-auto md:mx-0"
+            className="w-fit bg-white text-[#126A9C] px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition mx-auto md:mx-0"
           >
             Book Appointment
           </button>
         </motion.div>
-        <div className="md:w-1/2 h-[180px] sm:h-[240px] md:h-[320px] lg:h-[400px]"></div>
-        <motion.img
-          src={assets.header_img}
-          alt="Trusted Doctors"
-          initial={{ opacity: 0, x: 100 }}
+
+        {/* Right: Image */}
+        <motion.div
+          className="relative flex justify-center items-end h-full min-h-[240px] md:min-h-[320px] lg:min-h-[420px] overflow-hidden"
+          initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="absolute bottom-0 right-0 sm:right-0 md:right-10 h-[180px] sm:h-[240px] md:h-[320px] lg:h-[400px] object-contain object-bottom pointer-events-none"
-        />
+        >
+          <img
+            src={assets.header_img}
+            alt="Doctor Team"
+            className="h-full w-auto max-h-[480px] md:max-h-[540px] lg:max-h-[600px] object-contain object-bottom"
+          />
+        </motion.div>
       </div>
-    </div>
+    </header>
   );
 };
 
