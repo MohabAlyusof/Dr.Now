@@ -79,20 +79,20 @@ export const specialityData = [
 ];
 
 export const doctors = [
-   {
+  {
     _id: "doc1",
     name: "Dr. Richard James",
     image: doc1,
     speciality: "General physician",
     degree: "MBBS",
-    experience: "4 Years",
+    experience: "6 Years",
     about:
       "Dr. Richard James is a trusted general physician with four years of experience in comprehensive primary care. He emphasizes early diagnosis, preventive strategies, and long-term wellness for his patients.",
-    fees: 50,
+    fees: 70,
     address: {
       line1: "Friedrichstraße 12",
-      line2: "Berlin, Germany"
-    }
+      line2: "Berlin, Germany",
+    },
   },
   {
     _id: "doc2",
@@ -100,29 +100,29 @@ export const doctors = [
     image: doc2,
     speciality: "Gynecologist",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "8 Years",
     about:
       "Dr. Emily Larson is a dedicated gynecologist with three years of experience supporting women's health through compassionate care, reproductive health expertise, and hormonal balance strategies.",
     fees: 60,
     address: {
       line1: "Ludwigstraße 45",
-      line2: "Munich, Germany"
-    }
+      line2: "Munich, Germany",
+    },
   },
   {
     _id: "doc3",
-    name: "Dr. Sarah Patel",
+    name: "Dr. Sari Patel",
     image: doc3,
     speciality: "Dermatologist",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "5 Years",
     about:
-      "Dr. Sarah Patel is a motivated dermatologist with one year of hands-on experience treating common and complex skin conditions with a focus on patient education and confidence-building care.",
-    fees: 30,
+      "Dr. Sari Patel is a motivated dermatologist with one year of hands-on experience treating common and complex skin conditions with a focus on patient education and confidence-building care.",
+    fees: 80,
     address: {
       line1: "Königsallee 78",
-      line2: "Düsseldorf, Germany"
-    }
+      line2: "Düsseldorf, Germany",
+    },
   },
   {
     _id: "doc4",
@@ -130,14 +130,14 @@ export const doctors = [
     image: doc4,
     speciality: "Pediatricians",
     degree: "MBBS",
-    experience: "4 Years",
+    experience: "3 Years",
     about:
       "Dr. Christopher Lee is a caring pediatrician devoted to the health and development of children, offering two years of dedicated experience in child wellness and family support.",
-    fees: 40,
+    fees: 60,
     address: {
       line1: "Goethestraße 33",
-      line2: "Frankfurt am Main, Germany"
-    }
+      line2: "Frankfurt am Main, Germany",
+    },
   },
   {
     _id: "doc5",
@@ -148,11 +148,11 @@ export const doctors = [
     experience: "4 Years",
     about:
       "Dr. Jennifer Garcia is a skilled neurologist with four years of experience diagnosing and managing neurological disorders, providing expert care for brain and nerve health.",
-    fees: 50,
+    fees: 60,
     address: {
       line1: "Leipziger Straße 9",
-      line2: "Leipzig, Germany"
-    }
+      line2: "Leipzig, Germany",
+    },
   },
   {
     _id: "doc6",
@@ -160,29 +160,29 @@ export const doctors = [
     image: doc6,
     speciality: "Gastroenterologist",
     degree: "MBBS",
-    experience: "4 Years",
+    experience: "10 Years",
     about:
       "Dr. Andrew Williams is a dedicated gastroenterologist focused on digestive health. With four years of experience, he provides patient-centered care for gastrointestinal conditions.",
-    fees: 50,
+    fees: 100,
     address: {
       line1: "Universitätsstraße 21",
-      line2: "Cologne, Germany"
-    }
+      line2: "Cologne, Germany",
+    },
   },
   {
     _id: "doc7",
-    name: "Dr. Christopher Davis",
+    name: "Dr. Christian Davis",
     image: doc7,
     speciality: "General physician",
     degree: "MBBS",
-    experience: "4 Years",
+    experience: "9 Years",
     about:
-      "Dr. Christopher Davis is a general physician committed to providing holistic and preventive healthcare. His four years of practice focus on long-term wellness and individualized treatment.",
-    fees: 50,
+      "Dr. Christian Davis is a general physician committed to providing holistic and preventive healthcare. His four years of practice focus on long-term wellness and individualized treatment.",
+    fees: 90,
     address: {
       line1: "Schillerstraße 60",
-      line2: "Stuttgart, Germany"
-    }
+      line2: "Stuttgart, Germany",
+    },
   },
   {
     _id: "doc8",
@@ -190,14 +190,14 @@ export const doctors = [
     image: doc8,
     speciality: "Gynecologist",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "6 Years",
     about:
       "Dr. Timothy White is a skilled gynecologist dedicated to women's health. With three years of experience, he provides support in reproductive care, family planning, and gynecological conditions.",
     fees: 60,
     address: {
       line1: "Maximilianstraße 88",
-      line2: "Augsburg, Germany"
-    }
+      line2: "Augsburg, Germany",
+    },
   },
   {
     _id: "doc9",
@@ -205,14 +205,14 @@ export const doctors = [
     image: doc9,
     speciality: "Dermatologist",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "6 Years",
     about:
       "Dr. Ava Mitchell is an enthusiastic dermatologist focusing on individualized skincare and treatment of common skin disorders. She offers attentive care tailored to each patient's needs.",
-    fees: 30,
+    fees: 70,
     address: {
       line1: "Hansastraße 16",
-      line2: "Dortmund, Germany"
-    }
+      line2: "Dortmund, Germany",
+    },
   },
   {
     _id: "doc10",
@@ -220,14 +220,14 @@ export const doctors = [
     image: doc10,
     speciality: "Pediatricians",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "5 Years",
     about:
       "Dr. Jeffrey King is a pediatrician passionate about early childhood health. He brings two years of experience in nurturing care, disease prevention, and family-centered treatment.",
-    fees: 40,
+    fees: 60,
     address: {
       line1: "Bismarckstraße 25",
-      line2: "Hamburg, Germany"
-    }
+      line2: "Hamburg, Germany",
+    },
   },
   {
     _id: "doc11",
@@ -235,14 +235,14 @@ export const doctors = [
     image: doc11,
     speciality: "Neurologist",
     degree: "MBBS",
-    experience: "4 Years",
+    experience: "7 Years",
     about:
       "Dr. Zoe Kelly is an experienced neurologist specializing in the diagnosis and management of neurological conditions, offering advanced care through empathetic and expert service.",
-    fees: 50,
+    fees: 80,
     address: {
       line1: "Theodor-Heuss-Ring 14",
-      line2: "Kiel, Germany"
-    }
+      line2: "Kiel, Germany",
+    },
   },
   {
     _id: "doc12",
@@ -256,8 +256,8 @@ export const doctors = [
     fees: 50,
     address: {
       line1: "Karlstraße 31",
-      line2: "Nuremberg, Germany"
-    }
+      line2: "Nuremberg, Germany",
+    },
   },
   {
     _id: "doc13",
@@ -271,8 +271,8 @@ export const doctors = [
     fees: 50,
     address: {
       line1: "Bahnhofstraße 3",
-      line2: "Hannover, Germany"
-    }
+      line2: "Hannover, Germany",
+    },
   },
   {
     _id: "doc14",
@@ -280,14 +280,14 @@ export const doctors = [
     image: doc14,
     speciality: "Gynecologist",
     degree: "MBBS",
-    experience: "3 Years",
+    experience: "5 Years",
     about:
       "Dr. Ryan Martinez is a compassionate gynecologist with three years of experience in women’s reproductive health. He provides expert care in prenatal support, fertility, and general gynecological wellness.",
     fees: 60,
     address: {
       line1: "Berliner Allee 50",
-      line2: "Essen, Germany"
-    }
+      line2: "Essen, Germany",
+    },
   },
   {
     _id: "doc15",
@@ -298,10 +298,10 @@ export const doctors = [
     experience: "3 Years",
     about:
       "Dr. Amelia Hill is a passionate dermatologist with one year of experience treating a wide range of skin conditions. She is committed to personalized care and helping patients feel confident in their skin.",
-    fees: 30,
+    fees: 50,
     address: {
       line1: "Marktstraße 18",
-      line2: "Bremen, Germany"
-    }
+      line2: "Bremen, Germany",
+    },
   },
 ];
