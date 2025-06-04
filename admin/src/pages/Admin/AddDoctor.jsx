@@ -75,7 +75,7 @@ const AddDoctor = () => {
       onSubmit={onSubmitHandler}
       className="px-6 py-6 w-full bg-[#F8F9FD] min-h-screen"
     >
-      <p className="text-2xl font-semibold text-gray-700 mb-6">Add Doctor</p>
+      <p className="text-3xl font-semibold text-primary mb-6">Add Doctor</p>
 
       <div className="bg-white px-8 py-10 border rounded-2xl w-full max-w-5xl shadow-md overflow-y-auto">
         <div className="flex items-center gap-4 mb-8 text-gray-500">
@@ -92,10 +92,10 @@ const AddDoctor = () => {
             id="doc-img"
             hidden
           />
-          <p className="text-sm text-gray-600">Upload doctor picture</p>
+          <p className="text-lg text-primary">Upload doctor picture</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-10 text-gray-700">
+        <div className="flex flex-col lg:flex-row gap-10 text-primary">
           <div className="w-full lg:flex-1 flex flex-col gap-4">
             {[
               {
@@ -128,7 +128,7 @@ const AddDoctor = () => {
               },
             ].map((field, idx) => (
               <div key={idx} className="flex flex-col gap-1">
-                <label className="text-sm">{field.label}</label>
+                <label className="text-lg text-primary">{field.label}</label>
                 <input
                   type={field.type}
                   value={field.value}
@@ -141,7 +141,7 @@ const AddDoctor = () => {
             ))}
 
             <div className="flex flex-col gap-1">
-              <label className="text-sm">Experience</label>
+              <label className="text-lg text-primary">Experience</label>
               <select
                 onChange={(e) => setExperience(e.target.value)}
                 value={experience}
@@ -158,7 +158,7 @@ const AddDoctor = () => {
 
           <div className="w-full lg:flex-1 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-sm">Speciality</label>
+              <label className="text-lg text-primary">Speciality</label>
               <select
                 onChange={(e) => setSpeciality(e.target.value)}
                 value={speciality}
@@ -180,7 +180,7 @@ const AddDoctor = () => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-sm">Degree</label>
+              <label className="text-lg text-primary">Degree</label>
               <input
                 type="text"
                 value={degree}
@@ -192,7 +192,7 @@ const AddDoctor = () => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-sm">Address</label>
+              <label className="text-lg text-primary">Address</label>
               <input
                 type="text"
                 value={address1}
@@ -214,11 +214,11 @@ const AddDoctor = () => {
         </div>
 
         <div className="mt-6">
-          <label className="text-sm mb-2 block">About Doctor</label>
+          <label className="text-lg mb-2 block text-primary">About Doctor</label>
           <textarea
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            className="w-full px-4 pt-3 border rounded-lg focus:outline-[#126A9C] focus:ring-1"
+            className="w-full px-4 pt-3 border rounded-lg text-primary focus:outline-[#126A9C] focus:ring-1"
             rows={5}
             placeholder="Write about the doctor..."
           />

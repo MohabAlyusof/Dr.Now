@@ -16,14 +16,14 @@ const AllAppointments = () => {
 
   return (
     <div className="px-4 py-4 w-full bg-[#F8F9FD] min-h-screen">
-      <p className="text-2xl font-semibold text-gray-700 mb-4">
+      <p className="text-3xl font-semibold text-primary mb-4">
         All Appointments
       </p>
 
       <div className="bg-white border rounded-xl shadow-sm text-sm max-h-[80vh] overflow-y-auto">
         <div
           className="hidden sm:grid grid-cols-[0.5fr_1fr_1fr_2fr_1.5fr_1fr_1fr]
-                        py-3 px-4 bg-gray-100 text-gray-700 font-medium border-b
+                        py-3 px-4 bg-gray-100 text-primary text-lg font-medium border-b
                         sticky top-0 z-10"
         >
           <p>#</p>
@@ -36,7 +36,7 @@ const AllAppointments = () => {
         </div>
 
         {appointments.length === 0 && (
-          <p className="text-center py-10 text-gray-500">
+          <p className="text-center py-10 text-primary">
             No appointments found.
           </p>
         )}
@@ -50,14 +50,14 @@ const AllAppointments = () => {
             <p className="max-sm:hidden">{index + 1}</p>
 
             <div>
-              <p className="sm:hidden text-xs text-gray-500">Patient:</p>
+              <p className="sm:hidden text-xs text-primary">Patient:</p>
               <div className="flex items-center gap-2">
                 <img
                   src={item.userData.image}
                   className="w-8 h-8 rounded-full object-cover"
                   alt="Patient"
                 />
-                <p className="font-medium">{item.userData.name}</p>
+                <p className="font-medium text-primary">{item.userData.name}</p>
               </div>
             </div>
 
@@ -66,7 +66,7 @@ const AllAppointments = () => {
             </div>
 
             <div>
-              <p className="sm:hidden text-xs text-gray-500">Date & Time:</p>
+              <p className="sm:hidden text-xs text-primary">Date & Time:</p>
               <p>
                 {slotDateFormat(item.slotDate)},{" "}
                 <span className="text-gray-500">{item.slotTime}</span>
@@ -74,7 +74,7 @@ const AllAppointments = () => {
             </div>
 
             <div>
-              <p className="sm:hidden text-xs text-gray-500">Doctor:</p>
+              <p className="sm:hidden text-xs text-primary">Doctor:</p>
               <div className="flex items-center gap-2">
                 <img
                   src={item.docData.image}
@@ -86,7 +86,7 @@ const AllAppointments = () => {
             </div>
 
             <div>
-              <p className="sm:hidden text-xs text-gray-500">Fees:</p>
+              <p className="sm:hidden text-xs text-primary">Fees:</p>
               <p className="text-gray-700">
                 {currency}
                 {item.amount}

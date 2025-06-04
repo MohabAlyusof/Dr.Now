@@ -17,7 +17,7 @@ const Header = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold leading-tight">
             Book with Trusted <br /> Healthcare Professionals
           </h1>
           <p className="text-base text-white/90 leading-relaxed max-w-md mx-auto md:mx-0">

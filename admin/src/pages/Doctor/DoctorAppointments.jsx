@@ -19,10 +19,10 @@ const DoctorAppointments = () => {
 
   return (
     <div className="w-full max-w-6xl m-5">
-      <p className="mb-3 text-lg font-medium text-gray-800">All Appointments</p>
+      <p className="mb-3 text-2xl font-medium text-primary">All Appointments</p>
 
       <div className="bg-white border rounded text-sm max-h-[80vh] overflow-y-scroll">
-        <div className="hidden sm:grid grid-cols-[0.3fr_1.5fr_1fr_0.8fr_2fr_1fr_1.2fr] py-3 px-4 border-b text-[#126A9C] text-xs font-semibold sticky top-0 bg-white z-10">
+        <div className="hidden sm:grid grid-cols-[0.3fr_1.5fr_1fr_0.8fr_2fr_1fr_1.2fr] py-3 px-4 border-b text-[#126A9C] text-lg font-semibold sticky top-0 bg-white z-10">
           <p>#</p>
           <p>Patient</p>
           <p>Payment</p>
@@ -45,7 +45,7 @@ const DoctorAppointments = () => {
                 className="w-7 h-7 rounded-full object-cover"
                 alt="Patient"
               />
-              <p className="font-medium">{item.userData.name}</p>
+              <p className="font-medium text-primary">{item.userData.name}</p>
             </div>
 
             <p>

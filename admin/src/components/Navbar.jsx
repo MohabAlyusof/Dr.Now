@@ -41,7 +41,7 @@ const Navbar = () => {
           alt="Logo"
         />
         {(aToken || dToken) && (
-          <p className="bg-white text-gray-800 px-3 py-1 text-xs sm:text-sm rounded-full shadow-inner">
+          <p className="bg-white text-primary px-3 py-1 text-xs sm:text-sm rounded-full shadow-inner">
             {aToken ? 'Admin' : `Doctor: ${profileData?.name || '...'}`}
           </p>
         )}
@@ -50,7 +50,7 @@ const Navbar = () => {
       {(aToken || dToken) && (
         <button
           onClick={logout}
-          className="mt-2 sm:mt-0 bg-white text-gray-700 px-4 py-2 rounded-full font-light 
+          className="mt-2 sm:mt-0 bg-white text-primary px-4 py-2 rounded-full font-light 
                      hover:scale-105 hover:shadow-lg transition-transform duration-300 text-sm"
         >
           Logout

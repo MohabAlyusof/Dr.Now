@@ -85,14 +85,14 @@ const DoctorProfile = () => {
 
           {/* معلومات الطبيب */}
           <div className="flex-1 border border-gray-100 rounded-xl bg-white p-6 shadow-sm min-h-[22rem]">
-            <p className="text-2xl font-semibold text-gray-800">{profileData.name}</p>
+            <p className="text-2xl font-semibold text-primary">{profileData.name}</p>
             <div className="flex items-center gap-3 text-gray-600 mt-1">
               <p>{profileData.degree} - {profileData.speciality}</p>
               <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">{profileData.experience}</span>
             </div>
 
             <div className="mt-4">
-              <p className="text-sm font-semibold text-gray-700 mb-1">About</p>
+              <p className="text-sm font-semibold text-primary mb-1">About</p>
               {isEdit ? (
                 <textarea
                   onChange={(e) => setProfileData((prev) => ({ ...prev, about: e.target.value }))}
@@ -106,7 +106,7 @@ const DoctorProfile = () => {
             </div>
 
             <div className="mt-4">
-              <p className="font-semibold text-gray-700">Appointment Fee</p>
+              <p className="font-semibold text-primary">Appointment Fee</p>
               {isEdit ? (
                 <input
                   type="number"
@@ -120,7 +120,7 @@ const DoctorProfile = () => {
             </div>
 
             <div className="mt-4">
-              <p className="font-semibold text-gray-700">Address</p>
+              <p className="font-semibold text-primary">Address</p>
               {isEdit ? (
                 <div className="space-y-2 mt-1">
                   <input

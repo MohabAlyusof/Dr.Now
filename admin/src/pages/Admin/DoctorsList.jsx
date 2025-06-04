@@ -13,7 +13,7 @@ const DoctorsList = () => {
 
   return (
     <div className="px-6 py-6 bg-[#F8F9FD] min-h-screen overflow-y-auto">
-      <h1 className="text-2xl font-semibold text-gray-700 mb-6">All Doctors</h1>
+      <h1 className="text-3xl font-semibold text-primary mb-6">All Doctors</h1>
 
       <div className="w-full flex flex-wrap gap-6">
         {doctors.map((item, index) => (
@@ -27,7 +27,7 @@ const DoctorsList = () => {
               alt={item.name}
             />
             <div className="p-4">
-              <p className="text-[#262626] text-lg font-semibold mb-1">
+              <p className="text-[#262626] text-lg text-primary font-semibold mb-1">
                 {item.name}
               </p>
               <p className="text-[#5C5C5C] text-sm">{item.speciality}</p>

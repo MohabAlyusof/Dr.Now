@@ -37,12 +37,12 @@ const Dashboard = () => {
           ].map((stat, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 bg-white text-gray-800 p-5 rounded-xl min-w-56 border border-gray-100 shadow-sm hover:shadow-md transition-all"
+              className="flex items-center gap-3 bg-white text-primary p-5 rounded-xl min-w-56 border border-gray-100 shadow-sm hover:shadow-md transition-all"
             >
               <img className="w-14" src={stat.icon} alt={stat.label} />
               <div>
                 <p className="text-xl font-semibold">{stat.value}</p>
-                <p className="text-sm text-gray-500">{stat.label}</p>
+                <p className="text-sm text-primary">{stat.label}</p>
               </div>
             </div>
           ))}
@@ -50,7 +50,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="flex items-center gap-2.5 px-6 py-4 bg-[#F1F4F9] border-b">
             <img src={assets.list_icon} alt="list" />
-            <p className="text-base font-semibold text-gray-700">
+            <p className="text-base font-semibold text-primary">
               Latest Bookings
             </p>
           </div>
@@ -67,7 +67,7 @@ const Dashboard = () => {
                   alt=""
                 />
                 <div className="flex-1 text-sm">
-                  <p className="text-gray-800 font-medium">
+                  <p className="text-primary font-medium">
                     {item.docData.name}
                   </p>
                   <p className="text-gray-500">
