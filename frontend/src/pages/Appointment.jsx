@@ -5,6 +5,7 @@ import { assets } from '../assets/assets';
 import RelatedDoctors from '../components/RelatedDoctors';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -73,32 +74,34 @@ const Appointment = () => {
     }
   };
 
-  const bookAppointment = async () => {
-    if (!token) {
-      toast.warning('Login to book appointment');
-      return navigate('/login');
-    }
+const bookAppointment = async () => {
+  if (!token) {
+    toast.warning('Login to book appointment');
+    return navigate('/login');
+  }
 
-    try {
-      const slotDate = `${selectedDay}_${currentMonth + 1}_${currentYear}`;
-      const { data } = await axios.post(
-        `${backendUrl}/api/user/book-appointment`,
-        { docId, slotDate, slotTime: selectedTime },
-        { headers: { token } }
-      );
+  try {
+    const slotDate = `${selectedDay}_${currentMonth + 1}_${currentYear}`;
+    const channel = uuidv4(); // توليد قناة فريدة
 
-      if (data.success) {
-        toast.success(data.message);
-        getDoctosData();
-        navigate('/my-appointments');
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(error.message);
+    const { data } = await axios.post(
+      `${backendUrl}/api/user/book-appointment`,
+      { docId, slotDate, slotTime: selectedTime, channel }, // أرسل القناة
+      { headers: { token } }
+    );
+
+    if (data.success) {
+      toast.success(data.message);
+      getDoctosData();
+      navigate('/my-appointments');
+    } else {
+      toast.error(data.message);
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error(error.message);
+  }
+};
 
   useEffect(() => {
     if (doctors.length > 0) {

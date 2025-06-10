@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DoctorContext } from "../../context/DoctorContext";
 import { AppContext } from "../../context/AppContext";
 import { assets } from "../../assets/assets";
+import AppVideoCall from "../../components/AppVideoCall";
 
 const DoctorAppointments = () => {
   const {
@@ -10,12 +11,39 @@ const DoctorAppointments = () => {
     getAppointments,
     cancelAppointment,
     completeAppointment,
+    doctor,
   } = useContext(DoctorContext);
   const { slotDateFormat, calculateAge, currency } = useContext(AppContext);
+
+  const [videoSession, setVideoSession] = useState({ channel: "", uid: "", token: "" });
 
   useEffect(() => {
     if (dToken) getAppointments();
   }, [dToken]);
+
+  const startVideoCall = async (item) => {
+    const uidValue = `doctor-${item._id}`;
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/agora/rtc-token?channel=${item.channel}&uid=${uidValue}`,
+        { headers: { token: dToken } }
+      );
+      const data = await res.json();
+      if (data.success) {
+        console.log("🎫 [Doctor] Joining video call with:");
+        console.log("📡 Channel:", item.channel);
+        console.log("🆔 UID:", `doctor-${item._id}`);
+
+        setVideoSession({
+          channel: item.channel,
+          uid: uidValue,
+          token: data.token,
+        });
+      }
+    } catch (err) {
+      console.error("Error starting video call:", err);
+    }
+  };
 
   return (
     <div className="w-full max-w-6xl m-5">
@@ -56,7 +84,7 @@ const DoctorAppointments = () => {
                     : "bg-yellow-100 text-yellow-600"
                 }`}
               >
-                {item.payment ? "Paid" : "Online"}
+                {item.payment ? "Online" : "Cash"}
               </span>
             </p>
 
@@ -83,26 +111,52 @@ const DoctorAppointments = () => {
                 Completed
               </span>
             ) : (
-              <div className="flex gap-1">
-                <img
+              <div className="flex flex-col gap-1">
+                <button
                   onClick={() => cancelAppointment(item._id)}
-                  className="w-6 cursor-pointer hover:scale-105 transition-transform"
-                  src={assets.cancel_icon}
-                  alt="Cancel"
-                  title="Cancel Appointment"
-                />
-                <img
+                  className="text-red-600 border border-red-500 px-2 py-1 rounded hover:bg-red-100 text-xs"
+                >
+                  Cancel
+                </button>
+                <button
                   onClick={() => completeAppointment(item._id)}
-                  className="w-6 cursor-pointer hover:scale-105 transition-transform"
-                  src={assets.tick_icon}
-                  alt="Complete"
-                  title="Mark as Completed"
-                />
+                  className="text-green-600 border border-green-500 px-2 py-1 rounded hover:bg-green-100 text-xs"
+                >
+                  Complete
+                </button>
+                {item.payment && item.channel && (
+                  <button
+                    onClick={() => startVideoCall(item)}
+                    className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs"
+                  >
+                    Start Video Call
+                  </button>
+                )}
               </div>
             )}
           </div>
         ))}
       </div>
+
+      {videoSession.token && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="relative bg-white p-6 sm:p-8 rounded-2xl shadow-2xl text-center max-w-3xl w-full flex flex-col items-center">
+            <AppVideoCall
+              channel={videoSession.channel}
+              uid={videoSession.uid}
+              token={videoSession.token}
+              onClose={() => setVideoSession({ channel: "", uid: "", token: "" })}
+            />
+            <button
+              onClick={() => setVideoSession({ channel: "", uid: "", token: "" })}
+              className="absolute top-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
+              title="End Call"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

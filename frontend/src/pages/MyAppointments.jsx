@@ -97,16 +97,25 @@ const MyAppointments = () => {
     }
   };
 
-  const startVideoSession = async (item) => {
-    setChannel(item.channel);
-    setUid(item.uid);
-    const videoToken = await getAgoraToken(item.channel, item.uid);
-    if (videoToken) {
-      setTokenRTC(videoToken);
-    } else {
-      toast.error("Unable to start video session.");
-    }
-  };
+const startVideoSession = async (item) => {
+const uidValue = `user-${item._id}`;
+
+console.log("🎫 [Patient] Joining video call with:");
+console.log("📡 Channel:", item.channel);
+console.log("🆔 UID:", `user-${item._id}`);
+
+  setUid(uidValue);
+  setChannel(item.channel); // <-- هذا السطر مفقود
+  const videoToken = await getAgoraToken(item.channel, uidValue);
+  if (videoToken) {
+    setTokenRTC(videoToken);
+  } else {
+    toast.error("Unable to start video session.");
+  }
+};
+
+
+
 
   useEffect(() => {
     if (token) {
@@ -200,43 +209,38 @@ const MyAppointments = () => {
         ))}
       </div>
 
-      {tokenRTC && (
-        <motion.div
-          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <motion.div
-            className="relative bg-white p-6 sm:p-8 rounded-2xl shadow-2xl text-center max-w-3xl w-full flex flex-col items-center"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h2 className="text-2xl font-bold text-[#126A9C] mb-4">
-              Live Video Consultation
-            </h2>
+{tokenRTC && (
+  <motion.div
+    className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 backdrop-blur-sm"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <motion.div
+      className="relative bg-white p-6 sm:p-8 rounded-2xl shadow-2xl text-center max-w-3xl w-full flex flex-col items-center"
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <AppVideoCall
+        channel={channel}
+        token={tokenRTC}
+        uid={uid}
+        onClose={() => setTokenRTC(null)}
+      />
 
-            <div className="w-full h-[400px] sm:h-[500px] bg-black rounded-xl overflow-hidden shadow-md flex items-center justify-center">
-              <AppVideoCall
-                channel={channel}
-                token={tokenRTC}
-                uid={uid}
-                onClose={() => setTokenRTC(null)}
-              />
-            </div>
+      <button
+        onClick={() => setTokenRTC(null)}
+        className="absolute top-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
+        title="End Call"
+      >
+        ✕
+      </button>
+    </motion.div>
+  </motion.div>
+)}
 
-            <button
-              onClick={() => setTokenRTC(null)}
-              className="absolute top-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
-              title="End Call"
-            >
-              ✕
-            </button>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 };

@@ -29,7 +29,7 @@ router.get("/rtc-token", authUser, (req, res) => {
       APP_ID,
       APP_CERTIFICATE,
       channel,
-      parseInt(uid),
+      uid,
       role,
       privilegeExpiredTs
     );
