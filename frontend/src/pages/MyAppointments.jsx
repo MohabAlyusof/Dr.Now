@@ -67,6 +67,24 @@ const MyAppointments = () => {
     }
   };
 
+  const completeAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/user/complete-appointment`,
+        { appointmentId },
+        { headers: { token } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getUserAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const appointmentStripe = async (appointmentId) => {
     try {
       const { data } = await axios.post(
@@ -185,8 +203,11 @@ console.log("🆔 UID:", `user-${item._id}`);
               )}
 
               {item.isCompleted && (
-                <button className="py-2 px-4 border border-green-500 rounded-full text-green-600 bg-green-50">
-                  Completed
+                  <button
+                  onClick={() => completeAppointment(item._id)}
+                  className="text-green-600 border border-green-500 px-2 py-1 rounded hover:bg-green-100 text-xs"
+                >
+                  Complete
                 </button>
               )}
 
