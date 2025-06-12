@@ -16,7 +16,8 @@ Dr.Now ist eine umfassende Gesundheitsplattform, die mit dem MERN-Stack (MongoDB
 
 ## Live-Demo
 
-[Link zur Live-Demo hier]
+[https://dr-now-backend.onrender.com]
+[https://dr-now-frontend.onrender.com]
 
 ## Verwendete Technologien
 
