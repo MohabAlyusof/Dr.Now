@@ -16,22 +16,13 @@ connectCloudinary();
 
 // middlewares
 app.use(express.json());
-const allowedOrigins = [
-  'https://dr-now-frontend.onrender.com',
-  'https://dr-now-admin.onrender.com'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: [
+    "https://dr-now-frontend.onrender.com",
+    "https://dr-now-admin.onrender.com"
+  ],
   credentials: true,
 }));
-
 app.use("/api/agora", agoraTokenRoute);
 
 // api endpoints
