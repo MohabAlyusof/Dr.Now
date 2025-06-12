@@ -202,12 +202,12 @@ console.log("🆔 UID:", `user-${item._id}`);
                 </>
               )}
 
-              {item.isCompleted && (
+              {!item.cancelled && item.isCompleted && (
                   <button
                   onClick={() => completeAppointment(item._id)}
                   className="text-green-600 border border-green-500 px-2 py-1 rounded hover:bg-green-100 text-xs"
                 >
-                  Complete
+                 Appointment Complete
                 </button>
               )}
 
