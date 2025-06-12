@@ -16,8 +16,8 @@ Dr.Now is a comprehensive healthcare platform built using the MERN (MongoDB, Exp
 
 ## Live Demo
 
-[https://dr-now-backend.onrender.com]
 [https://dr-now-frontend.onrender.com]
+[https://dr-now-admin.onrender.com]
 
 ## Technologies Used
 
