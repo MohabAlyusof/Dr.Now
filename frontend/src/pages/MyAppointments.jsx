@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { assets } from "../assets/assets";
 import AppVideoCall from "../components/AppVideoCall";
 import { motion } from "framer-motion";
+import { assets } from "../assets/assets.js";
 
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
@@ -105,7 +105,7 @@ console.log("📡 Channel:", item.channel);
 console.log("🆔 UID:", `user-${item._id}`);
 
   setUid(uidValue);
-  setChannel(item.channel); // <-- هذا السطر مفقود
+  setChannel(item.channel);
   const videoToken = await getAgoraToken(item.channel, uidValue);
   if (videoToken) {
     setTokenRTC(videoToken);
