@@ -17,10 +17,7 @@ connectCloudinary();
 // middlewares
 app.use(express.json());
 app.use(cors({
-  origin: [
-    "https://dr-now-frontend.onrender.com",
-    "https://dr-now-admin.onrender.com"
-  ],
+  origin: process.env.CLIENT_URL,
   credentials: true,
 }));
 app.use("/api/agora", agoraTokenRoute);
