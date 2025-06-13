@@ -39,7 +39,7 @@ const Verify = () => {
     if ((token, appointmentId, success)) {
       verifyStripe();
     }
-  }, [token, appointmentId, success]);
+  }, [token]);
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center">

@@ -7,12 +7,6 @@ import userRouter from "./routes/userRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 import agoraTokenRoute from "./routes/agoraTokenRoute.js";
-import path from "path";
-import { fileURLToPath } from "url";
-
-//_dirname  ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
 
 // app config
 const app = express();
@@ -32,12 +26,6 @@ app.use("/api/agora", agoraTokenRoute);
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
-// static files
-app.use(express.static(path.join(__dirname, "client", "build")));
-// catch all route for react app
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
 
 app.get("/", (req, res) => {
   res.send("API Working");
