@@ -16,7 +16,10 @@ connectCloudinary();
 
 // middlewares
 app.use(express.json());
-app.use(cors({origin: process.env.CLIENT_URL, credentials: true}));
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:7777",
+  credentials: true,
+}));
 app.use("/api/agora", agoraTokenRoute);
 
 // api endpoints
