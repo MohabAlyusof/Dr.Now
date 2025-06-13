@@ -228,7 +228,7 @@ const verifyStripe = async (req, res) => {
     const { appointmentId, success } = req.body;
     if (success === "true") {
       await appointmentModel.findByIdAndUpdate(appointmentId, {
-        payment: false,
+        payment: true,
       });
       return res.json({ success: true, message: "Payment Successful" });
     }

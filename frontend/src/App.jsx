@@ -12,7 +12,7 @@ import MyProfile from "./pages/MyProfile";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Verify from "./pages/Verify.jsx";
+import Verify from "./pages/Verify";
 
 const App = () => {
   return (
