@@ -225,7 +225,7 @@ const paymentStripe = async (req, res) => {
 
 const verifyStripe = async (req, res) => {
   try {
-    const { appointmentId, success } = req.body;
+    const { appointmentId, success } = req.query;
     if (success === "true") {
       await appointmentModel.findByIdAndUpdate(appointmentId, {
         payment: true,

@@ -32,6 +32,7 @@ userRouter.post("/book-appointment", authUser, bookAppointment);
 userRouter.get("/appointments", authUser, listAppointment);
 userRouter.post("/cancel-appointment", authUser, cancelAppointment);
 userRouter.post("/payment-stripe", authUser, paymentStripe);
-userRouter.post("/verifyStripe", authUser, verifyStripe);
+// userRouter.post("/verifyStripe", authUser, verifyStripe);
+userRouter.get("/verifyStripe", authUser, verifyStripe);
 
 export default userRouter;
