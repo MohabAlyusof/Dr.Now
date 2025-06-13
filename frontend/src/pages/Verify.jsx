@@ -36,10 +36,10 @@ const Verify = () => {
   };
 
   useEffect(() => {
-    if ((token, appointmentId, success)) {
+    if (( appointmentId, success)) {
       verifyStripe();
     }
-  }, [token]);
+  }, []);
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
