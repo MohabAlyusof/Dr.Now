@@ -7,6 +7,13 @@ import userRouter from "./routes/userRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 import agoraTokenRoute from "./routes/agoraTokenRoute.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// to get the current directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__dirname);
 
 // app config
 const app = express();
@@ -26,6 +33,12 @@ app.use("/api/agora", agoraTokenRoute);
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
 
 app.get("/", (req, res) => {
   res.send("API Working");
