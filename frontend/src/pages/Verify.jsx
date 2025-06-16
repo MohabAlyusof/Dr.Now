@@ -28,7 +28,7 @@ const Verify = () => {
         toast.error(data.message);
       }
 
-      navigate("/my-appointments");
+      navigate(`${backendUrl}/my-appointments`);
     } catch (error) {
       toast.error(error.message);
       console.log(error);
