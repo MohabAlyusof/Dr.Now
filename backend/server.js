@@ -10,16 +10,13 @@ import agoraTokenRoute from "./routes/agoraTokenRoute.js";
 
 // app config
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 7777;
 connectDB();
 connectCloudinary();
 
 // middlewares
 app.use(express.json());
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-}));
 app.use("/api/agora", agoraTokenRoute);
 
 // api endpoints
