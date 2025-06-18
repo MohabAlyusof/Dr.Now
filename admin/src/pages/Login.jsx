@@ -22,7 +22,7 @@ const Login = () => {
       const { data } = await axios.post(backendUrl + "/api/admin/login", {
         email,
         password,
-      });
+      },{withCredentials: true});
       if (data.success) {
         setAToken(data.token);
         localStorage.setItem("aToken", data.token);
@@ -33,7 +33,7 @@ const Login = () => {
       const { data } = await axios.post(backendUrl + "/api/doctor/login", {
         email,
         password,
-      });
+      },{withCredentials: true});
       if (data.success) {
         setDToken(data.token);
         localStorage.setItem("dToken", data.token);
