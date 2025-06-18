@@ -10,6 +10,10 @@ import agoraTokenRoute from "./routes/agoraTokenRoute.js";
 
 // app config
 const app = express();
+app.use((req, res, next) => {
+  console.log("origen:", req.headers.origin);
+  next();
+});
 app.use(cors({
   origin:[process.env.CLIENT_URL, process.env.ADMIN_URL],
   credentials: true,
