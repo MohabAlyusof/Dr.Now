@@ -11,7 +11,7 @@ import agoraTokenRoute from "./routes/agoraTokenRoute.js";
 // app config
 const app = express();
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin:[process.env.CLIENT_URL, process.env.ADMIN_URL],
   credentials: true,
 }));
 const port = process.env.PORT || 7777;
