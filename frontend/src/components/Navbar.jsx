@@ -101,16 +101,18 @@ const Navbar = () => {
           />
         </div>
         <ul className="flex flex-col items-start gap-4 p-5 text-gray-700 font-medium">
-          {["/", "/doctors", "/about", "/contact"].map((path, idx) => (
-            <NavLink
-              key={idx}
-              onClick={() => setShowMenu(false)}
-              to={path}
-              className="w-full block hover:text-[#126A9C] py-2 border-b"
-            >
-              {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
-            </NavLink>
-          ))}
+          {["/", "/doctors", "/about", "/contact", "/login"].map(
+            (path, idx) => (
+              <NavLink
+                key={idx}
+                onClick={() => setShowMenu(false)}
+                to={path}
+                className="w-full block hover:text-[#126A9C] py-2 border-b"
+              >
+                {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
+              </NavLink>
+            )
+          )}
         </ul>
       </div>
     </div>
