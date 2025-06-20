@@ -108,7 +108,7 @@ const Navbar = () => {
               to={path}
               className="w-full block hover:text-[#126A9C] py-2 border-b"
             >
-              {path === "/" ? "Home" : path.replace("/", "").toUpperCase()}
+              {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
             </NavLink>
           ))}
         </ul>
