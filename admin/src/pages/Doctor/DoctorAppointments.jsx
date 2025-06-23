@@ -15,7 +15,11 @@ const DoctorAppointments = () => {
   } = useContext(DoctorContext);
   const { slotDateFormat, calculateAge, currency } = useContext(AppContext);
 
-  const [videoSession, setVideoSession] = useState({ channel: "", uid: "", token: "" });
+  const [videoSession, setVideoSession] = useState({
+    channel: "",
+    uid: "",
+    token: "",
+  });
 
   useEffect(() => {
     if (dToken) getAppointments();
@@ -25,7 +29,9 @@ const DoctorAppointments = () => {
     const uidValue = `doctor-${item._id}`;
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/agora/rtc-token?channel=${item.channel}&uid=${uidValue}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/agora/rtc-token?channel=${
+          item.channel
+        }&uid=${uidValue}`,
         { headers: { token: dToken } }
       );
       const data = await res.json();
@@ -112,18 +118,6 @@ const DoctorAppointments = () => {
               </span>
             ) : (
               <div className="flex flex-col gap-1">
-                <button
-                  onClick={() => cancelAppointment(item._id)}
-                  className="text-red-600 border border-red-500 px-2 py-1 rounded hover:bg-red-100 text-xs"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => completeAppointment(item._id)}
-                  className="text-green-600 border border-green-500 px-2 py-1 rounded hover:bg-green-100 text-xs"
-                >
-                  Complete
-                </button>
                 {item.payment && item.channel && (
                   <button
                     onClick={() => startVideoCall(item)}
@@ -132,6 +126,18 @@ const DoctorAppointments = () => {
                     Start Video Call
                   </button>
                 )}
+                <button
+                  onClick={() => completeAppointment(item._id)}
+                  className="text-green-600 border border-green-500 px-2 py-1 rounded hover:bg-green-100 text-xs"
+                >
+                  Complete
+                </button>
+                <button
+                  onClick={() => cancelAppointment(item._id)}
+                  className="text-red-600 border border-red-500 px-2 py-1 rounded hover:bg-red-100 text-xs"
+                >
+                  Cancel
+                </button>
               </div>
             )}
           </div>
@@ -145,10 +151,14 @@ const DoctorAppointments = () => {
               channel={videoSession.channel}
               uid={videoSession.uid}
               token={videoSession.token}
-              onClose={() => setVideoSession({ channel: "", uid: "", token: "" })}
+              onClose={() =>
+                setVideoSession({ channel: "", uid: "", token: "" })
+              }
             />
             <button
-              onClick={() => setVideoSession({ channel: "", uid: "", token: "" })}
+              onClick={() =>
+                setVideoSession({ channel: "", uid: "", token: "" })
+              }
               className="absolute top-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-md hover:bg-red-700 transition"
               title="End Call"
             >
