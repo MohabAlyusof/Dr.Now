@@ -90,7 +90,7 @@ const DoctorAppointments = () => {
                     : "bg-yellow-100 text-yellow-600"
                 }`}
               >
-                {item.payment ? "Online" : "Cash"}
+                {item.payment ? "Paid" : "Online"}
               </span>
             </p>
 
